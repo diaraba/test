@@ -41,11 +41,25 @@ function add(){
 
 function calc(){
     let sum=0;
+    let exp_price=0;
     for(let i=0;i<commandes.length;i++){
         sum+=(commandes[i]["price"]*commandes[i]["numb"]);
     }
+    if(sum<2000&&sum>0)
+    {
+        exp_price=500;
+    }
+    else if(sum>=2000&&sum<=3000)
+    {
+        exp_price=250;
+    }
+    else if(sum>=3000&&sum==0)
+    {
+        exp_price=0
+    }
 
-alert(`Le montant total est de ${sum}yen`);
+
+alert(`Les frais d'expéditions sont de ${exp_price} yen .\n Le sous total est de ${sum} yen \nLe montant total est de ${sum + exp_price} yen`);
 commandes=[];
 priceElement="";
 numberElement="";
