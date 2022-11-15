@@ -93,43 +93,98 @@
 // }
 
 const priceElement = document.getElementById("product");
-const nomElement = document.getElementById("product");
 const numberElement = document.getElementById("number");
 let commandes = [];
+let produits = [];
+let ajout = [];
+
+
 
 function add() {
   const price = parseInt(priceElement.value);
-  const nom = parseInt(nomElement.name);
   const number = parseInt(numberElement.value);
 
+  function Produit(nom, prix) {
+    this.nom = nom;
+    this.prix = prix;
+  }
+
+  let produit = new Produit("", 0);
+  produits.push(produit);
+
+  let produit3 = new Produit("Mélange cremeux", 900);
+  produits.push(produit3);
+
+  let produit2 = new Produit("Mélange latté", 700);
+  produits.push(produit2);
+
+  let produit1 =  new Produit("Mélange cremeux latté", 1200);
+  produits.push(produit1);
+
+  let produit4 = new Produit("Mélange original", 500);
+  produits.push(produit4);
+
+
+
+console.log(produits);
       let commande = {
-          price: parseInt(price),
+          price: parseInt(produits[price].prix),
           number: parseInt(number),
-          nom:  nom,
+          nom:  produits[price].nom,
         };
-      
+        console.log(commande);
+
         const newPurchase = commandes.findIndex((item) => item.price === commande.price) // --1
         if(commandes.length < 1 || newPurchase === -1) {
           commandes.push(commande)
+          ajout.push(display());
+
         } else {
           commandes[newPurchase].number += commande.number
+          ajout.push(display());
+
         }
-  window.alert(`${display()}\n小計${subtotal()}円`);
+
+  window.alert(`${display()}\n Le sous total est de ${subtotal()} yen`);
+  // for(let i=0; i<ajout.length; i++)
+  // {
+
+  //   if(ajout[i]==display()){
+  //     ajout[i]=display();
+  //   }
+    
+  //   else{
+  //     ajout.push(display());
+  //   }
+  //   console.log(ajout);
+  // }
+ 
 }
 
+  // for(let i=0; i<ajout.length; i++)
+  // {
+
+  //   if(ajout[i]==display()){
+  //     delete  ajout[i];
+  //     ajout[i] =display();
+  //   }
+    
+    
+  // }
+
+  console.log(ajout);
 
 
 function display() {
     let string = "";
     for (let i = 0; i < commandes.length; i++) {
-        string += `${commandes[i].number} ${commandes[i].nom} qui coute  ${commandes[i].price} yen \n`;
+        string += `${commandes[i].number} ${commandes[i].nom} pour ${commandes[i].price} yen \n`;
+       
     }
-//   for(let i=0; i<purchases.length; i++){
-//     string += `${purchases[i].price}円が${purchases[i].number}点\n`;
-//   }
+
   return string;
 }
-
+;
 // function subtotal() {
 //   let sum = 0;
 //     for(let i=0; i<purchases.length; i++){
@@ -147,11 +202,12 @@ function subtotal() {
 function calc() {
   const sum = subtotal();
   const postage = calcPostageFromPurchase(sum);
-  alert(`Les frais d'expéditions sont de ${postage} yen .\n Le sous total est de ${sum} yen \nLe montant total est de ${sum + postage} yen`);
-  // commandes=[];
+  alert(`${ajout.join("\n")}  est la liste d'ajout final\n Les frais d'expéditions sont de ${postage} yen .\n Le sous total est de ${sum} yen \nLe montant total est de ${sum + postage} yen`);
   commandes = [];
   priceElement.value= "";
   numberElement.value = "";
+  ajout=[];
+  produits=[];
 }
 
 function calcPostageFromPurchase(sum) {
